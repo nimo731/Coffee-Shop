@@ -17,8 +17,6 @@ class Order:
         if not isinstance(value, type(self._customer)) and self._customer is not None:
             raise TypeError("Customer must be a Customer instance")
         self._customer = value
-        if value is not None:
-            value._orders.append(self)
 
     @property
     def coffee(self):
