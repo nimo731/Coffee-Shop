@@ -1,7 +1,11 @@
+from typing import Optional
+from customer import Customer
+from coffee import Coffee
+
 class Order:
     """An order linking a customer to a coffee with a specific price."""
     
-    def __init__(self, customer, coffee, price):
+    def __init__(self, customer: Customer, coffee: Coffee, price: float) -> None:
         """Initialize a new order.
         
         Args:
@@ -13,21 +17,21 @@ class Order:
             TypeError: If price is not a float.
             ValueError: If price is not between 1.0 and 10.0.
         """
-        self._customer = None
-        self._coffee = None
-        self._price = None
+        self._customer: Optional[Customer] = None
+        self._coffee: Optional[Coffee] = None
+        self._price: Optional[float] = None
         
         self.customer = customer
         self.coffee = coffee
         self.price = price
 
     @property
-    def customer(self):
+    def customer(self) -> Customer:
         """Get the customer who made this order."""
         return self._customer
 
     @customer.setter
-    def customer(self, value):
+    def customer(self, value: Customer) -> None:
         """Set the customer for this order.
         
         Args:
@@ -41,12 +45,12 @@ class Order:
         self._customer = value
 
     @property
-    def coffee(self):
+    def coffee(self) -> Coffee:
         """Get the coffee in this order."""
         return self._coffee
 
     @coffee.setter
-    def coffee(self, value):
+    def coffee(self, value: Coffee) -> None:
         """Set the coffee for this order.
         
         Args:
@@ -62,12 +66,12 @@ class Order:
             value._orders.append(self)
 
     @property
-    def price(self):
+    def price(self) -> float:
         """Get the price of this order."""
         return self._price
 
     @price.setter
-    def price(self, value):
+    def price(self, value: float) -> None:
         """Set the price of this order.
         
         Args:
