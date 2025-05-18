@@ -1,7 +1,11 @@
+from typing import List, Set
+from customer import Customer
+from order import Order
+
 class Coffee:
     """A coffee product in the coffee shop system."""
     
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         """Initialize a new coffee with a name.
         
         Args:
@@ -11,17 +15,17 @@ class Coffee:
             TypeError: If name is not a string.
             ValueError: If name is less than 3 characters.
         """
-        self._name = None
+        self._name: str = None
         self.name = name
-        self._orders = []
+        self._orders: List[Order] = []
 
     @property
-    def name(self):
+    def name(self) -> str:
         """Get the coffee's name."""
         return self._name
 
     @name.setter
-    def name(self, value):
+    def name(self, value: str) -> None:
         """Set the coffee's name.
         
         Args:
@@ -40,19 +44,19 @@ class Coffee:
             raise AttributeError("Coffee name cannot be changed after initialization")
         self._name = value
 
-    def orders(self):
+    def orders(self) -> List[Order]:
         """Get all orders for this coffee."""
         return self._orders
 
-    def customers(self):
+    def customers(self) -> Set[Customer]:
         """Get unique list of customers who have ordered this coffee."""
-        return list(set(order.customer for order in self._orders))
+        return set(order.customer for order in self._orders)
 
-    def num_orders(self):
+    def num_orders(self) -> int:
         """Get the total number of orders for this coffee."""
         return len(self._orders)
 
-    def average_price(self):
+    def average_price(self) -> float:
         """Calculate the average price of all orders for this coffee.
         
         Returns:
