@@ -1,19 +1,23 @@
+from typing import List, Optional, Set
+from order import Order
+from coffee import Coffee
+
 class Customer:
     """A customer in the coffee shop system."""
     
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         """Initialize a new customer with a name."""
-        self._name = None
+        self._name: Optional[str] = None
         self.name = name
-        self._orders = []
+        self._orders: List[Order] = []
 
     @property
-    def name(self):
+    def name(self) -> str:
         """Get the customer's name."""
         return self._name
 
     @name.setter
-    def name(self, value):
+    def name(self, value: str) -> None:
         """Set the customer's name.
         
         Args:
@@ -29,15 +33,15 @@ class Customer:
             raise ValueError("Name must be between 1 and 15 characters")
         self._name = value
 
-    def orders(self):
+    def orders(self) -> List[Order]:
         """Get all orders made by this customer."""
         return self._orders
 
-    def coffees(self):
+    def coffees(self) -> Set[Coffee]:
         """Get unique list of coffees ordered by this customer."""
-        return list(set(order.coffee for order in self._orders))
+        return set(order.coffee for order in self._orders)
 
-    def create_order(self, coffee, price):
+    def create_order(self, coffee: Coffee, price: float) -> Order:
         """Create a new order for this customer.
         
         Args:
@@ -47,13 +51,12 @@ class Customer:
         Returns:
             Order: The newly created order.
         """
-        from order import Order
         order = Order(self, coffee, price)
         self._orders.append(order)
         return order
 
     @classmethod
-    def most_aficionado(cls, coffee):
+    def most_aficionado(cls, coffee: Coffee) -> Optional['Customer']:
         """Find the customer who has spent the most on a particular coffee.
         
         Args:
