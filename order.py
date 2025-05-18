@@ -1,6 +1,11 @@
 from typing import Optional
 from customer import Customer
 from coffee import Coffee
+from constants import (
+    MIN_ORDER_PRICE,
+    MAX_ORDER_PRICE,
+    ERROR_MESSAGES
+)
 
 class Order:
     """An order linking a customer to a coffee with a specific price."""
@@ -41,7 +46,7 @@ class Order:
             TypeError: If value is not a Customer instance.
         """
         if not isinstance(value, type(self._customer)) and self._customer is not None:
-            raise TypeError("Customer must be a Customer instance")
+            raise TypeError(ERROR_MESSAGES['customer_type'])
         self._customer = value
 
     @property
@@ -60,7 +65,7 @@ class Order:
             TypeError: If value is not a Coffee instance.
         """
         if not isinstance(value, type(self._coffee)) and self._coffee is not None:
-            raise TypeError("Coffee must be a Coffee instance")
+            raise TypeError(ERROR_MESSAGES['coffee_type'])
         self._coffee = value
         if value is not None:
             value._orders.append(self)
@@ -83,9 +88,9 @@ class Order:
             AttributeError: If trying to change price after initialization.
         """
         if not isinstance(value, float):
-            raise TypeError("Price must be a float")
-        if not 1.0 <= value <= 10.0:
-            raise ValueError("Price must be between 1.0 and 10.0")
+            raise TypeError(ERROR_MESSAGES['order_price_type'])
+        if not MIN_ORDER_PRICE <= value <= MAX_ORDER_PRICE:
+            raise ValueError(ERROR_MESSAGES['order_price_range'])
         if self._price is not None:
-            raise AttributeError("Order price cannot be changed after initialization")
+            raise AttributeError(ERROR_MESSAGES['order_price_immutable'])
         self._price = value 
