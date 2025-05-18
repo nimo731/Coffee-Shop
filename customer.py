@@ -1,6 +1,11 @@
 from typing import List, Optional, Set
 from order import Order
 from coffee import Coffee
+from constants import (
+    MIN_CUSTOMER_NAME_LENGTH,
+    MAX_CUSTOMER_NAME_LENGTH,
+    ERROR_MESSAGES
+)
 
 class Customer:
     """A customer in the coffee shop system."""
@@ -18,19 +23,11 @@ class Customer:
 
     @name.setter
     def name(self, value: str) -> None:
-        """Set the customer's name.
-        
-        Args:
-            value (str): The new name, must be 1-15 characters.
-            
-        Raises:
-            TypeError: If name is not a string.
-            ValueError: If name length is not between 1 and 15 characters.
-        """
+        """Set the customer's name."""
         if not isinstance(value, str):
-            raise TypeError("Name must be a string")
-        if not 1 <= len(value) <= 15:
-            raise ValueError("Name must be between 1 and 15 characters")
+            raise TypeError(ERROR_MESSAGES['customer_name_type'])
+        if not MIN_CUSTOMER_NAME_LENGTH <= len(value) <= MAX_CUSTOMER_NAME_LENGTH:
+            raise ValueError(ERROR_MESSAGES['customer_name_length'])
         self._name = value
 
     def orders(self) -> List[Order]:
@@ -42,29 +39,14 @@ class Customer:
         return set(order.coffee for order in self._orders)
 
     def create_order(self, coffee: Coffee, price: float) -> Order:
-        """Create a new order for this customer.
-        
-        Args:
-            coffee (Coffee): The coffee to order.
-            price (float): The price of the order (1.0-10.0).
-            
-        Returns:
-            Order: The newly created order.
-        """
+        """Create a new order for this customer."""
         order = Order(self, coffee, price)
         self._orders.append(order)
         return order
 
     @classmethod
     def most_aficionado(cls, coffee: Coffee) -> Optional['Customer']:
-        """Find the customer who has spent the most on a particular coffee.
-        
-        Args:
-            coffee (Coffee): The coffee to check.
-            
-        Returns:
-            Customer or None: The customer who spent the most, or None if no orders.
-        """
+        """Find the customer who has spent the most on a particular coffee."""
         if not coffee.orders():
             return None
         
