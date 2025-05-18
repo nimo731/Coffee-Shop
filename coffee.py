@@ -1,15 +1,37 @@
 class Coffee:
+    """A coffee product in the coffee shop system."""
+    
     def __init__(self, name):
+        """Initialize a new coffee with a name.
+        
+        Args:
+            name (str): The name of the coffee, must be at least 3 characters.
+            
+        Raises:
+            TypeError: If name is not a string.
+            ValueError: If name is less than 3 characters.
+        """
         self._name = None
         self.name = name
         self._orders = []
 
     @property
     def name(self):
+        """Get the coffee's name."""
         return self._name
 
     @name.setter
     def name(self, value):
+        """Set the coffee's name.
+        
+        Args:
+            value (str): The new name, must be at least 3 characters.
+            
+        Raises:
+            TypeError: If name is not a string.
+            ValueError: If name is less than 3 characters.
+            AttributeError: If trying to change name after initialization.
+        """
         if not isinstance(value, str):
             raise TypeError("Name must be a string")
         if len(value) < 3:
@@ -19,15 +41,23 @@ class Coffee:
         self._name = value
 
     def orders(self):
+        """Get all orders for this coffee."""
         return self._orders
 
     def customers(self):
+        """Get unique list of customers who have ordered this coffee."""
         return list(set(order.customer for order in self._orders))
 
     def num_orders(self):
+        """Get the total number of orders for this coffee."""
         return len(self._orders)
 
     def average_price(self):
+        """Calculate the average price of all orders for this coffee.
+        
+        Returns:
+            float: The average price, or 0 if no orders exist.
+        """
         if not self._orders:
             return 0
         return sum(order.price for order in self._orders) / len(self._orders) 
