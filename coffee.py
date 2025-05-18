@@ -1,6 +1,10 @@
 from typing import List, Set
 from customer import Customer
 from order import Order
+from constants import (
+    MIN_COFFEE_NAME_LENGTH,
+    ERROR_MESSAGES
+)
 
 class Coffee:
     """A coffee product in the coffee shop system."""
@@ -37,11 +41,11 @@ class Coffee:
             AttributeError: If trying to change name after initialization.
         """
         if not isinstance(value, str):
-            raise TypeError("Name must be a string")
-        if len(value) < 3:
-            raise ValueError("Name must be at least 3 characters long")
+            raise TypeError(ERROR_MESSAGES['coffee_name_type'])
+        if len(value) < MIN_COFFEE_NAME_LENGTH:
+            raise ValueError(ERROR_MESSAGES['coffee_name_length'])
         if self._name is not None:
-            raise AttributeError("Coffee name cannot be changed after initialization")
+            raise AttributeError(ERROR_MESSAGES['coffee_name_immutable'])
         self._name = value
 
     def orders(self) -> List[Order]:
